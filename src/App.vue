@@ -24,6 +24,9 @@ export default {
   margin: 0 auto;
 }
 .app-body {
+  background-color: transparent !important;
+}
+body {
   background-color:#e2bd9d !important;
 }
 .aclonica {
@@ -34,5 +37,11 @@ export default {
 }
 .amethysta {
   font-family: 'Amethysta', serif;
+}
+.standard-page {
+  height: 100vh !important;
+  width: 100vw !important;
+  display: block !important;
+  // overflow: hidden !important;
 }
 </style>

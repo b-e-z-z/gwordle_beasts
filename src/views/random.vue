@@ -1,27 +1,26 @@
 <template>
   <div>
-    <v-container>
-      <v-row style="height: 100px;"></v-row>
-      <v-row align="center" class="header-row">
-        <v-spacer></v-spacer>
-        <v-col cols="auto" class="text-center">
-          <div class="gwordle-title aclonica">
-            Gwordle Beasts
-          </div>
-          <div class="gwordle-subtitle amethysta">
-            Endless random mode.
-          </div>
-        </v-col>
-        <v-spacer></v-spacer>
-      </v-row>
-      <v-row>
-        <v-spacer></v-spacer>
-        <v-col cols="auto">
-          <gwordle v-if="ready" :gwordle="chosen" />
-        </v-col>
-        <v-spacer></v-spacer>
-      </v-row>
-    </v-container>
+    <v-row align="center" class="spacer-row">
+    </v-row>
+    <v-row align="center" class="header-row">
+      <v-spacer></v-spacer>
+      <v-col cols="auto" class="text-center">
+        <div class="gwordle-title aclonica">
+          Gwordle Beasts
+        </div>
+        <div class="gwordle-subtitle amethysta">
+          Endless random mode.
+        </div>
+      </v-col>
+      <v-spacer></v-spacer>
+    </v-row>
+    <v-row class="options-row">
+      <v-spacer></v-spacer>
+      <v-col cols="12" md="4">
+        <gwordle v-if="ready" :sharetext="sharetext" :answer="chosen" />
+      </v-col>
+      <v-spacer></v-spacer>
+    </v-row>
   </div>
 </template>
 <script>
@@ -39,13 +38,16 @@ export default {
     chosen: null,
   }),
   computed: {
+    sharetext () {
+      return "Gwordle Beasts \n" + "random: " + this.chosen.Name + "\n";
+    }
   },
   watch: {
   },
   methods: {
     getRandomGwordle: function () {
       var totalCards = Cards.length;
-      var choice = Math.random() * totalCards;
+      var choice = Math.floor(Math.random() * totalCards);
       this.chosen = Cards[choice];
 
       this.ready = true;
@@ -57,15 +59,23 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.header-row {
+.spacer-row {
+  height: 64px;
 }
+.header-row {
+  height: 20vh;
+}
+.options-row {
+  // height: 40vh;
+}
+
 .gwordle-title {
-  font-size: 4em;
+  font-size: 5vh;
   color: black;
   -webkit-text-stroke: 1px white;
 }
 .gwordle-subtitle {
-  font-size: 2em;
+  font-size: 3vh;
   color: black;
 }
 </style>
