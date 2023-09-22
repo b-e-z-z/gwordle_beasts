@@ -157,13 +157,10 @@ export default {
 
       if (this.answer.Name == guess.Name) {
         // win
-        this.win(guess);
+        this.win();
       }
     },
-    win: function (guess){
-      if (guess != null) {
-        guess.won = true;
-      }
+    win: function (){
       this.complete = true;
     },
     filterName: function(cards, name) {

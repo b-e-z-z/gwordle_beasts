@@ -24,7 +24,7 @@ export default {
   }),
   computed: {
     won () {
-      return this.guess.won
+      return this.guess.Name == this.answer.Name;
     }
   },
   watch: {
