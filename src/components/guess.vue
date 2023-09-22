@@ -1,33 +1,9 @@
 <template>
   <tr class="guess-row" :class="won ? 'won': ''">
-    <td class="guess-cell">
-      <div class="px-2">
-        {{guess.Name}}
-      </div>
-    </td>
-    <td class="guess-cell">
-      <div :class="getArtistColor()">
-        {{guess.Artist}}
-      </div>
-    </td>
-    <td class="guess-cell">
-      <div :class="getTypeColor()">
-        {{guess.Type}}
-      </div>
-    </td>
-    <td class="guess-cell text-center">
-      <div :class="getRarityColor()">
-        {{guess.Rarity}}
-      </div>
-    </td>
-    <td class="guess-cell text-center">
-      <div :class="getCostColor()">
-        {{guess.Cost}}
-      </div>
-    </td>
-    <td class="guess-cell text-center">
-      <div :class="getPowerColor()">
-        {{guess.Power}}
+    <td v-for="column in columns" :key="column.p" class="guess-cell">
+      <div :class="column.c ? column.c() : ''">
+        {{ guess[column.p] }}
+        <v-icon v-if="column.h" class="comparison-hint">{{ column.h() }}</v-icon>
       </div>
     </td>
   </tr>
@@ -43,7 +19,8 @@ export default {
   data: () => ({
     green: "green",
     orange: "orange",
-    red: "red"
+    red: "red",
+    columns: []
   }),
   computed: {
     won () {
@@ -68,11 +45,23 @@ export default {
     getPowerColor: function () {
       return Gwordle.getColorClass(Gwordle.comparePower(this.guess, this.answer));
     },
-    pw: function (percent) {
-      return (this.width * (percent / 100.0)) + "px"; 
-    }
+    getNumberColor: function () {
+      return Gwordle.getColorClass(Gwordle.compareNumber(this.guess, this.answer));
+    },
+    getNumberHint: function () {
+      return Gwordle.getHint(Gwordle.compareNumber(this.guess, this.answer));
+    },
   },
   mounted () {
+    this.columns = [
+      { p: 'Name' },
+      { p: 'Artist', c: this.getArtistColor },
+      { p: 'Type', c: this.getTypeColor },
+      { p: 'Rarity', c: this.getRarityColor },
+      { p: 'Cost', c: this.getCostColor },
+      { p: 'Power', c: this.getPowerColor },
+      { p: 'Number', c: this.getNumberColor, h: this.getNumberHint }
+    ]
   }
 }
 </script>
@@ -101,6 +90,9 @@ export default {
   text-overflow: ellipsis;
   display: inline-table;
 }
+.guess-cell:first-child > div {
+  padding: 7px 2px;
+}
 .won {
   background-color: #3f813f;
 }
@@ -114,5 +106,8 @@ export default {
 .won td:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+.comparison-hint {
+  font-size: 16px;
 }
 </style>

@@ -2,6 +2,8 @@ let gwordle = {
   correct: "YES",
   close: "SIMILAR",
   wrong: "NO",
+  higher: "HIGHER",
+  lower: "LOWER",
   getColorClass: function (comparison) {
     if (comparison == this.correct) {
       return 'green'
@@ -9,7 +11,19 @@ let gwordle = {
       return 'orange'
     } else if (comparison == this.wrong) {
       return 'red'
+    } else if (comparison == this.higher) {
+      return 'orange'
+    } else if (comparison == this.lower) {
+      return 'orange'
     }
+  },
+  getHint:function (comparison) {
+    if (comparison == this.higher) {
+      return 'mdi-arrow-up'
+    } else if (comparison == this.lower) {
+      return 'mdi-arrow-down'
+    }
+    return '';
   },
   compareArtist: function (guess, answer) {
     if (guess.Artist == answer.Artist) {
@@ -53,6 +67,15 @@ let gwordle = {
       }
     }
     return this.wrong;
+  },
+  compareNumber: function (guess, answer) {
+    if (guess.Number == answer.Number) {
+      return this.correct;
+    } else if (guess.Number < answer.Number) {
+      return this.higher
+    } else if (guess.Number > answer.Number) {
+      return this.lower
+    }
   },
   getCardImage: function (card) {
     var name = card.Name;

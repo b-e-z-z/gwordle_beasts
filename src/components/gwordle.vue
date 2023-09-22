@@ -2,7 +2,7 @@
   <v-container class="amethysta">
     <v-row v-if="!complete">
       <v-spacer/>
-      <v-col cols="12" md="6">
+      <v-col cols="12" lg="8">
         <v-text-field
           label="Guess"
           v-model="guessName"
@@ -79,13 +79,23 @@
               <th class="cell-header">Card</th>
               <th class="cell-header">Artist</th>
               <th class="cell-header">Type</th>
-              <th class="cell-header text-center">Rarity</th>
-              <th class="cell-header text-center">Cost</th>
-              <th class="cell-header text-center">Power</th>
+              <th style="max-width: 70px" class="cell-header">Rarity</th>
+              <th style="max-width: 70px" class="cell-header">Cost</th>
+              <th style="max-width: 70px" class="cell-header">Power</th>
+              <th style="width: 90px" class="cell-header">Number</th>
             </tr>
           </thead>
           <tbody>
             <guess v-for="guess in orderedGuesses" :key="guess.Name" :guess="guess" :answer="answer" :width="300"/>
+            <tr v-if="guesses.length == 0">
+              <td style="width: 130px"/>
+              <td style="width: 100px"/>
+              <td style="width: 112px"/>
+              <td style="width: 50px"/>
+              <td style="width: 45px"/>
+              <td style="width: 50px"/>
+              <td style="width: 90px"/>              
+            </tr>
           </tbody>
         </template>
       </v-simple-table>
@@ -200,6 +210,7 @@ export default {
 }
 .cell-header {
   font-weight: 100 !important;
+  padding: 0px 7px !important;
 }
 .win-message {
   height: 300px;

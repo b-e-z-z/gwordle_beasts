@@ -16,7 +16,7 @@
     </v-row>
     <v-row class="options-row">
       <v-spacer></v-spacer>
-      <v-col cols="12" md="4">
+      <v-col cols="auto">
         <gwordle v-if="ready" :sharetext="sharetext" :answer="chosen" />
       </v-col>
       <v-spacer></v-spacer>
@@ -64,9 +64,6 @@ export default {
 }
 .header-row {
   height: 20vh;
-}
-.options-row {
-  // height: 40vh;
 }
 
 .gwordle-title {
