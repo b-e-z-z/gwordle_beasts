@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="app-toolbar" app>
+  <v-app-bar app dense height="64" class="app-toolbar">
     <router-link to="/">
       <v-btn icon>
         <v-icon>mdi-home</v-icon>

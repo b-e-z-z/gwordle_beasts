@@ -4,7 +4,7 @@
     </v-row>
     <v-row align="center" class="header-row">
       <v-spacer></v-spacer>
-      <v-col cols="auto" class="text-center">
+      <v-col cols="12" lg="8" class="text-center">
         <div class="gwordle-title aclonica">
           Gwordle Beasts
         </div>
@@ -16,7 +16,7 @@
     </v-row>
     <v-row class="options-row">
       <v-spacer></v-spacer>
-      <v-col cols="auto">
+      <v-col cols="12" lg="4">
         <gwordle v-if="ready" :sharetext="sharetext" :answer="chosen" />
       </v-col>
       <v-spacer></v-spacer>
@@ -60,19 +60,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .spacer-row {
-  height: 64px;
+  height: 32px;
 }
 .header-row {
-  height: 20vh;
+  // height: 20vh;
 }
 
 .gwordle-title {
-  font-size: 5vh;
+  font-size: 3em;
   color: black;
   -webkit-text-stroke: 1px white;
 }
 .gwordle-subtitle {
-  font-size: 3vh;
+  font-size: 1em;
   color: black;
 }
 </style>

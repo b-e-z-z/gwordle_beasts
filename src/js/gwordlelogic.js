@@ -91,6 +91,10 @@ let gwordle = {
       return '🟨'
     } else if (comparison == this.wrong) {
       return '⬛'
+    } else if (comparison == this.lower) {
+      return '⬇️'
+    } else if (comparison == this.higher) {
+      return '⬆️'
     }
   },
   generateEmojis: function(answer, guesses) {
@@ -103,11 +107,49 @@ let gwordle = {
       copy += this.getEmoji(this.compareRarity(guess, answer))
       copy += this.getEmoji(this.compareCost(guess, answer))
       copy += this.getEmoji(this.comparePower(guess, answer))
+      copy += this.getEmoji(this.compareNumber(guess, answer))
       copy += '\n'
     }
 
     return copy;
-  }
+  },
+  elapsedTime: function () {
+    var dayZero = new Date(Date.UTC(2023, 8, 20, 0, 0, 1, 0));
+    var now = new Date(Date.now());
+
+    var timeDiff = now.getTime() - dayZero.getTime();
+    
+    return timeDiff;
+  },
+  dailyTimer: function () {
+    var elapsed = this.elapsedTime();
+    var days = elapsed / (1000 * 3600 * 24);
+    var percent = days % 1.0;
+    var remaining = 1.0 - percent;
+    var hours = Math.floor(remaining * 24);
+
+    var minuteRemainder = (remaining - (hours / 24.0));
+    var minutes = Math.floor(minuteRemainder * 24 * 60);
+
+    var secondsRemainder = minuteRemainder - (minutes / (24.0 * 60.0))
+    var seconds = Math.floor(secondsRemainder * 24 * 60 * 60)
+    var message = "";
+
+    if (hours > 1) {
+      message += hours + " Hours";
+    } else {
+      message += minutes + "M "
+      message += seconds +"S";
+    }
+
+    return message;
+  },
+  getDayNumber: function () {
+    var elapsed = this.elapsedTime();
+    var days = elapsed / (1000 * 3600 * 24);
+
+    return Math.floor(days);
+  },
 }
 
 

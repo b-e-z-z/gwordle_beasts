@@ -23,54 +23,7 @@
       </v-col>
       <v-spacer/>
     </v-row>
-    <v-row v-if="complete" align="center">
-      <v-spacer/>
-      <v-col cols="12" md="6" class="win-message">
-        <v-row>
-          <v-spacer/>
-          <v-col cols="auto">
-            <v-img
-            :src="answerCardUrl"
-            :aspect-ratio="5/7"
-            height="100%"
-            :width="200"
-            contain
-            >
-              <template v-slot:placeholder>
-                <div>
-                  <v-row align="center" style="height: 176px">
-                    <v-spacer />
-                    <v-col class="text-center" cols="auto">
-                      <v-progress-circular indeterminate />
-                    </v-col>
-                    <v-spacer />
-                  </v-row>
-                </div>
-              </template>
-            </v-img>
-          </v-col>
-          <v-spacer/>
-        </v-row>
-      </v-col>
-      <v-col cols="12" md="6" class="text-center">
-        <div>
-          The answer was
-        </div>
-        <div class="answer-name">
-          {{ answer.Name }}
-        </div>
-        <div>
-          It took you {{ guesses.length }} tries
-        </div>
-        <div class="pa-4">
-          <v-btn class="text-none share-button" color="#370101" x-large rounded @click="shareToClipboard">
-            Share 
-            <v-icon class="ml-2">mdi-content-copy</v-icon>
-          </v-btn>
-        </div>
-      </v-col>
-      <v-spacer/>
-    </v-row>
+    <results v-if="complete" :sharetext="sharetext" :guesses="guesses" :answer="answer" />
     <v-row>
       <v-simple-table class="guess-table" dense>
         <template v-slot:default>
@@ -104,14 +57,16 @@
 </template>
 <script>
 import guess from './guess.vue'
-import { Gwordle } from '../js/gwordlelogic';
+import results from './results.vue'
 
 import { Cards } from '../js/grottobeasts'
+
 export default {
   name: 'Gwordle',
   props: ['answer', 'sharetext'],
   components: {
-    guess
+    guess,
+    results
   },
   data: () => ({
     guessName: '',
@@ -119,9 +74,6 @@ export default {
     complete: false
   }),
   computed: {
-    answerCardUrl () {
-      return Gwordle.getCardImage(this.answer);
-    },
     orderedGuesses () {
       return [].concat(this.guesses).reverse();
     }
@@ -168,14 +120,6 @@ export default {
     },
     exactName: function(cards, name) {
       return cards.find(c => c.Name.toLowerCase() == name.toLowerCase());
-    },
-    shareToClipboard: function () {
-      var emojis = Gwordle.generateEmojis(this.answer, this.guesses);
-
-      var copy = this.sharetext + '\n';
-      copy += emojis;
-
-      navigator.clipboard.writeText(copy);
     }
   },
   mounted () {
@@ -210,12 +154,16 @@ export default {
   padding: 0px 7px !important;
 }
 .win-message {
-  height: 300px;
+  padding-bottom: 16px;
 }
 .answer-name {
   font-size: 3em;
 }
 .share-button {
   font-family: Roboto, sans-serif;
+}
+
+.image-credit {
+  font-size: 1em;
 }
 </style>

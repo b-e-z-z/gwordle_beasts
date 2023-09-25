@@ -1,7 +1,9 @@
 <template>
   <v-app class="app-body">
     <toolbar/>
-    <router-view/>
+    <v-main>
+      <router-view/>
+    </v-main>
   </v-app>
 </template>
 <script>
